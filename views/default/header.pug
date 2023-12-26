@@ -1,0 +1,19 @@
+header
+  nav
+    ul
+      li
+        a(href="/") Home
+      li
+        a(href="/articles") Articles
+      li
+        a(href="#") Services
+      if !isLogged
+        li
+          a(href="/login") Login
+        li
+          a(href="/register") Register
+      if isLogged
+        li 
+          a(href="/articles/create") Create Article
+        li 
+          a(href="/account") Account

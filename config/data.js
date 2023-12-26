@@ -1,0 +1,3 @@
+exports.websiteData = {
+    title:"CMS"
+}

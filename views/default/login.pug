@@ -1,0 +1,18 @@
+extends layout
+
+block content
+	h1= title
+	p Welcome to login #{title}
+	form(action="/login", method="post")
+		if error != 0
+			strong= error
+		div
+			label(for="username") Username:
+			input(type="text", id="username", name="username", required)
+		div
+			label(for="password") Password:
+			input(type="password", id="password", name="password", required)
+		div
+			input(type="hidden", id="redirect", name="redirect", value=redirect)
+		div
+			input(type="submit", value="Login")

@@ -1,0 +1,78 @@
+
+/* styles.css */
+
+body {
+  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+}
+
+a {
+  color: #00B7FF;
+}
+.container {
+	padding: 50px;
+	max-width: 96vw; 
+}
+.node {
+	display: flex;
+	align-items: center;
+}
+.node img{
+	flex: 0 0 auto; /* 图片容器不随内容扩展 */
+	margin-right: 20px;
+	width:384px;
+	height:216px;
+	background-image: url('/thumbnail.png');
+	background-size: cover;
+	object-fit: fill;
+}
+.node .text-container{
+	  flex: 1; /* 剩余空间全部用于文字内容 */
+	  display: flex;
+	  flex-direction: column;
+	  justify-content: center; /* 上下居中 */
+}
+.node .title{
+	  font-size: 24px;
+	  font-weight: bold;
+}
+.aligncenter{
+	display: table; 
+	margin: auto;
+	margin-left: auto; 
+	margin-right: auto;
+}
+.content {
+	padding: 50px;
+	max-width: 80vw; 
+}
+.content img{
+	display: table;
+	margin: auto;
+	margin-left: auto; 
+	margin-right: auto;
+	width: 500px;
+}
+/* 设置 header 样式 */
+header {
+  background-color: #333; /* 设置背景颜色 */
+  color: #fff; /* 设置文字颜色 */
+  padding: 20px; /* 设置内边距 */
+}
+
+/* 设置导航菜单样式 */
+nav ul {
+  list-style: none; /* 移除列表样式 */
+  margin: 0;
+  padding: 0;
+}
+
+nav ul li {
+  display: inline; /* 横向排列 */
+  margin-right: 20px; /* 间距 */
+}
+
+nav ul li a {
+  text-decoration: none; /* 移除链接下划线 */
+  color: #fff; /* 设置链接文字颜色 */
+  font-weight: bold; /* 设置文字粗细 */
+}

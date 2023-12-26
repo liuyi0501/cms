@@ -1,0 +1,11 @@
+extends layout
+
+block content
+	article 
+		h1 #{article.title}
+		div.content!= article.content
+		p 
+			small= article.type
+			br
+			small= article.category
+		a(href="/articles") Back to Articles

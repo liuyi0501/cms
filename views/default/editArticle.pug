@@ -1,0 +1,69 @@
+extends layout
+
+block content
+    link(rel="stylesheet", href="https://cdn.quilljs.com/1.3.6/quill.snow.css")
+    script(src="https://cdn.tiny.cloud/1/3ygnn1czvik2jscsltvosuhf0qenbaet4lrs16ahai5mrt6o/tinymce/5/tinymce.min.js" referrerpolicy="origin")
+    form(action=`/articles/edit/${article.id}`, method="post")
+      div
+        label(for="title") Title:
+        input(type="text", id="title", name="title", value=article.title, required)
+      div
+        label(for="content") Content:
+        textarea(id="content", name="content", rows="4", cols="50", required)= article.content
+      div
+        label(for="type") Type:
+        select(id="type", name="type", required)
+          option(value="article" selected=article.type==="article") Article
+          option(value="video" selected=article.type==="video") Video
+          option(value="app" selected=article.type==="app") Application
+          option(value="download" selected=article.type==="download") Files
+      div
+        label(for="category") Category:
+        select(id="category", name="category", required)
+          option(value="anime" selected=article.category==="anime") Anime
+          option(value="comic" selected=article.category==="comic") Comic
+          option(value='game' selected=article.category==="game") Game 
+          option(value='music' selected=article.category==="music") Music
+          option(value="image" selected=article.cateogry==="image") Image
+      div
+        input(type="submit", value="Update")
+    script.
+      tinymce.init({
+              selector: 'textarea',
+              plugins: 'image imagetools',
+              toolbar: 'image',
+              images_upload_url: '/upload/image', // 图片上传的服务器端 URL
+              images_upload_handler: function (blobInfo, success, failure) {
+                  let formData = new FormData();
+                  formData.append('file', blobInfo.blob(), blobInfo.filename());
+              
+                  fetch('/upload/image', {
+                    method: 'POST',
+                    body: formData
+                  })
+                  .then(response => response.json())
+                  .then(result => {
+                    // 假设服务器返回的图片链接数组
+                    const imageLinks = result.imageLinks; // 包含大中小尺寸的图片链接  
+                    // 构建 srcset 字符串
+                    const srcset = imageLinks.map(item => `${item.url} ${item.width}w`).join(', ');
+              
+                    // 生成图片标签并插入编辑器
+                    const img = document.createElement('img');
+                    img.setAttribute('src', imageLinks[0].url); // 默认显示最小尺寸的图片
+                    img.setAttribute('srcset', srcset);
+                    tinymce.activeEditor.insertContent(img.outerHTML);
+                    tinymce.activeEditor.windowManager.close();
+                    //success(img.outerHTML); // 将图片标签插入到编辑器
+                  })
+                  .catch(error => {
+                    failure('上传失败');
+                  });
+                },
+              automatic_uploads: true, // 自动上传图片
+              setup: function (editor) {
+                        editor.on('change', function () {
+                          editor.save(); // 保存编辑器内容
+                        });
+              }
+      });
